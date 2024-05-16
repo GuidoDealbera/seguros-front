@@ -11,12 +11,12 @@ const routes = [
     },
     {
         id: 2,
-        component: Contact,
+        component: Services
     },
     {
         id: 3,
-        component: Services
-    }
+        component: Contact,
+    },
 ];
 
 export default routes;

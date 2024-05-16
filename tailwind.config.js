@@ -8,7 +8,11 @@ export default {
     "./src/Hooks/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily:{
+        Nunito: "Nunito Sans, sans-serif"
+      }
+    },
   },
   plugins: [],
 }
