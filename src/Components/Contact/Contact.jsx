@@ -40,7 +40,7 @@ const Contact = () => {
     });
   };
   return (
-    <div id="contact" className="w-screens flex flex-col justify-center items-center gap-5">
+    <div id="contact" className="flex flex-col justify-center items-center gap-5 pb-10">
       <h1 className="text-white font-black text-2xl uppercase">Contacta<span className="text-[#F90607]">me</span></h1>
       <div className="min-w-64 max-w-[600px] w-full px-2 min-[400px]:px-10 flex flex-col md:flex-row">
         <form className="flex flex-col flex-1 gap-5">
@@ -67,6 +67,7 @@ const Contact = () => {
               ></textarea>
             )
           )}
+          <button type="button" className="w-max border border-[#F90607] rounded-full py-2 px-4 text-white bg-[#F90607] active:bg-opacity-80 active:border-transparent transition-all">Enviar mensaje</button>
         </form>
       </div>
     </div>
