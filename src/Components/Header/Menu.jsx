@@ -46,7 +46,7 @@ const Menu = ({
         showSidebar
           ? "translate-x-0 shadow-2xl shadow-black"
           : "translate-x-full rounded-tl-[5rem] shadow-none"
-      } sm:translate-x-full sm:shadow-none transition-all duration-300`}
+      } md:translate-x-full md:shadow-none transition-all duration-300`}
     >
       <section className="flex flex-col justify-center items-center gap-10">
         {buttons.map(({ text, path }, i) => (

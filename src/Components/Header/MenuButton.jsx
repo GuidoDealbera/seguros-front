@@ -5,7 +5,7 @@ const MenuButton = ({showSidebar, setShowSidebar, trigger}) => {
     setShowSidebar(checked);
   };
   return (
-    <div className="burger-icon z-50 sm:hidden" ref={trigger}>
+    <div className="burger-icon z-50 md:hidden" ref={trigger}>
       <label className="burger" ref={trigger} htmlFor="burger">
         <input className="line" ref={trigger} checked={showSidebar} type="checkbox" id="burger" onChange={handleChange} />
       </label>

@@ -142,3 +142,7 @@ body{
     transform: rotate(360deg);
   }
 }
+
+.image {
+  filter: drop-shadow(-40px 10px 25px rgba(0, 0, 0, 0.61));
+}
