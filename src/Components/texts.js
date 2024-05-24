@@ -7,5 +7,5 @@ export const home = {
   description3: "Nuestra base de asesoría es ayudar a que puedan hacer una correcta transferencia de riesgos de sus proyectos personales y empresariales, para proteger su patrimonio",
 };
 export const services = {
-  title: "Services",
+  title: "Te ofrecemos éstos servicios",
 };

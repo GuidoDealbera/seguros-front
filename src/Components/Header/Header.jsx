@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from "react";
-import { Link as ScrollLink, Events, scrollSpy } from "react-scroll";
+import { useState, useRef } from "react";
+import { Link as ScrollLink } from "react-scroll";
 import Menu from "./Menu";
 import MenuButton from "./MenuButton";
-const Header = () => {
-  const [activeSection, setActiveSection] = useState("home");
-  const [offset, setOffset] = useState(-100);
+// eslint-disable-next-line react/prop-types
+const Header = ({activeSection, setActiveSection}) => {
+  
   const [showSidebar, setShowSidebar] = useState(false);
   const trigger = useRef(null);
   const BUTTONS_NAV = [
@@ -26,28 +26,6 @@ const Header = () => {
     },
   ];
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 768) {
-        setOffset(-105); // Ajuste para pantallas grandes
-      } else {
-        setOffset(-100); // Ajuste para pantallas pequeñas
-      }
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    Events.scrollEvent.register("begin", () => {});
-    Events.scrollEvent.register("end", () => {});
-    scrollSpy.update();
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      Events.scrollEvent.remove("begin");
-      Events.scrollEvent.remove("end");
-    };
-  }, []);
-
   const handleSetActive = (to) => {
     setActiveSection(to);
   };
@@ -58,7 +36,7 @@ const Header = () => {
         smooth={true}
         duration={500}
         spy={true}
-        offset={-100}
+        offset={-96}
         onSetActive={handleSetActive}
       >
         <img
@@ -89,7 +67,7 @@ const Header = () => {
             smooth={true}
             duration={500}
             spy={true}
-            offset={offset}
+            offset={-96}
             onSetActive={handleSetActive}
             className={`border cursor-pointer py-1 px-4 rounded-full border-[#F90607] transition-all ${
               activeSection === path

@@ -50,14 +50,14 @@ const Companies = () => {
         <Swiper
           direction="horizontal"
           spaceBetween={10}
-          speed={2000}
+          speed={3500}
           breakpoints={{
             450: { slidesPerView: 2 },
             650: { slidesPerView: 3 },
             850: { slidesPerView: 4 },
           }}
           loop={true}
-          autoplay={{ delay: 3500, disableOnInteraction: false }}
+          autoplay={{ delay: 0, disableOnInteraction: false }}
           modules={[Autoplay]}
         >
           {companies.map(({ name, image }, i) => (
