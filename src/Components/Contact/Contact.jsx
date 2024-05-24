@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import {toast} from 'sonner'
+import { animateScroll as scroll } from 'react-scroll';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
 
 const key = import.meta.env.VITE_EMAIL_TOKEN;
-// const URL = import.meta.env.VITE_BACKEND_URL;
+const URL = import.meta.env.VITE_BACKEND_URL;
 const SERVICES_OPTIONS = [
   "Seguros",
   "Vehicular",
@@ -16,7 +20,24 @@ const SERVICES_OPTIONS = [
 const Contact = ({ subject, setSubject }) => {
   const [containKey, setContainKey] = useState(false);
   const [files, setFiles] = useState([]);
+  const [previews, setPreviews] = useState([]);
   const fileRef = useRef(null);
+  useEffect(() => {
+    if (!files) return;
+    let tmp = [];
+    for (let i = 0; i < files.length; i++) {
+      tmp.push(URL.createObjectURL(files[i]));
+    }
+    const objectUrls = tmp;
+    setPreviews(objectUrls);
+
+    //Para liberar memoria
+    for (let i = 0; i < objectUrls.length; i++) {
+      return () => {
+        URL.revokeObjectURL(objectUrls[i]);
+      };
+    }
+  }, [files]);
   useEffect(() => {
     const params = new URLSearchParams(window.location.search).get("key");
     if (params && params === key) {
@@ -44,6 +65,10 @@ const Contact = ({ subject, setSubject }) => {
     }
   };
 
+  const handleRemoveFile = (index) => {
+    setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+  };
+
   const fileButtonClick = () => {
     if (fileRef) {
       fileRef.current.click();
@@ -51,10 +76,47 @@ const Contact = ({ subject, setSubject }) => {
   };
   const onSubmit = async (event) => {
     event.preventDefault();
-    // const bodyParams = {
-    //   ...input,
-    //   urgent: containKey
-    // }
+    const formData = new FormData();
+    formData.append("name", input.name);
+    formData.append("email", input.email);
+    formData.append("subject", subject);
+    formData.append("message", input.message);
+    formData.append("urgent", containKey);
+    if (files.length > 0) {
+      files.forEach((file, i) => {
+        formData.append(`file${i}`, file);
+      });
+    }
+    try {
+      const responsePromise = fetch(`${URL}/UrgentMailer`, {
+        method: "POST",
+        body: formData
+      })
+      toast.promise(responsePromise, {
+        loading: "Enviando...",
+        success: "Mensaje enviado",
+        error: "Error al enviar mensaje"
+      })
+      const response = await responsePromise;
+      if(!response.ok){
+        toast.error("Error al enviar mensaje")
+      }
+      const result = response.json();
+      result.finally(() => {
+        setFiles([]);
+        setInput({
+          name: "",
+          email: "",
+          message: ""
+        });
+        setSubject("");
+        setPreviews([]);
+        scroll.scrollToTop({duration: 500})
+      })
+    } catch (error) {
+      console.error(error);
+      toast.error("Error al enviar e-mail")
+    }
   };
   return (
     <div
@@ -121,7 +183,7 @@ const Contact = ({ subject, setSubject }) => {
             onChange={handleFileChange}
             ref={fileRef}
           />
-          <section className="w-full -translate-y-4 flex items-center justify-center">
+          <section className="w-full -translate-y-4 flex flex-col gap-1 items-center justify-center">
             <button
               type="button"
               onClick={fileButtonClick}
@@ -153,6 +215,40 @@ const Contact = ({ subject, setSubject }) => {
               {files.length === 0 ? "Adjuntar" : "Seleccionar más"}
             </button>
           </section>
+          <div
+            className={`max-w-[520px] p-1 rounded-xl shadow-inner shadow-black/70 w-full ${
+              previews.length === 0 ? "hidden" : "inline-block"
+            }`}
+          >
+            <Swiper
+              scrollbar={true}
+              direction="horizontal"
+              slidesPerView={2}
+              spaceBetween={20}
+              breakpoints={{
+                410: { slidesPerView: 3 },
+                530: { slidesPerView: 4 },
+              }}
+            >
+              {previews.map((file, i) => (
+                <SwiperSlide key={i}>
+                  <div className="bg-white/65 w-28 h-40 px-2 py-3 rounded-xl flex flex-col gap-1 relative">
+                    <img
+                      src={file}
+                      alt="preview"
+                      className="w-full h-full object-cover"
+                    />
+                    <p className="truncate">{files[i]?.name}</p>
+                    <button
+                      type="button"
+                      className="absolute top-1 right-1 z-50 bg-red-600 rounded-full w-4 h-4 flex justify-center items-center cursor-pointer"
+                      onClick={() => handleRemoveFile(i)}
+                    ></button>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
           <button
             type="submit"
             className="w-max border border-[#F90607] rounded-full py-2 px-4 text-white bg-[#F90607] active:bg-opacity-80 active:border-transparent transition-all"

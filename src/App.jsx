@@ -18,9 +18,6 @@ function App() {
     }, 1200);
     return () => clearTimeout(time);
   }, []);
-  useEffect(() => {
-    console.log(subject)
-  }, [subject])
   return !loading ? (
     <>
       <Header activeSection={activeSection} setActiveSection={setActiveSection}/>
