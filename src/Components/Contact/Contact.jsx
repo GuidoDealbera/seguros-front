@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 
 const key = import.meta.env.VITE_EMAIL_TOKEN;
-const URL = import.meta.env.VITE_BACKEND_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const SERVICES_OPTIONS = [
   "Seguros",
   "Vehicular",
@@ -88,7 +88,7 @@ const Contact = ({ subject, setSubject }) => {
       });
     }
     try {
-      const responsePromise = fetch(`${URL}/UrgentMailer`, {
+      const responsePromise = fetch(`${BACKEND_URL}/UrgentMailer`, {
         method: "POST",
         body: formData
       })
