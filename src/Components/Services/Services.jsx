@@ -3,19 +3,19 @@ import {Link as ScrollLink} from 'react-scroll';
 
 const SERVICES_CARDS = [
   {
-    name: "Seguros",
-    image: "/sancor-seguros.png",
+    name: "Denuncia Siniestros",
+    image: "/siniestroVehicular.jpg",
   },
   {
     name: "Vehicular",
-    image: "/sancor-seguros.png",
+    image: "/vehicular.jpg",
   },
   {
     name: "Hogar",
-    image: "/sancor-seguros.png",
+    image: "/hogar.jpg",
   },
   {
-    name: "Mala práxis",
+    name: "Mala Práxis",
     image: "/sancor-seguros.png",
   },
   {
@@ -24,15 +24,15 @@ const SERVICES_CARDS = [
   },
   {
     name: "Riesgo Cibernético",
-    image: "/sancor-seguros.png",
+    image: "/cibernetico.jpg",
   },
   {
     name: "ART Caución",
-    image: "/sancor-seguros.png",
+    image: "/caucion.jpg",
   },
   {
     name: "Salud",
-    image: "/sancor-seguros.png",
+    image: "/salud.jpg",
   },
 ];
 
@@ -53,15 +53,17 @@ const Services = ({setSubject, setActiveSection}) => {
         {SERVICES_CARDS.map(({ name, image }, i) => (
           <div
             key={i}
-            className="w-[200px] h-max flex flex-col justify-center items-center p-2 gap-2 bg-white rounded-lg"
+            className="w-[200px] h-[230px] flex flex-col justify-between items-center p-2 gap-2 bg-white rounded-lg"
           >
             <div className="relative cursor-pointer">
               <ScrollLink to="contact" offset={-96} smooth={true} duration={500} spy={true}>
-              <div onClick={() => handleClick(`Cotización de ${name}`)} className="absolute flex justify-center items-center w-full h-full rounded-lg opacity-0 hover:opacity-100 bg-white/70 backdrop-blur-sm transition-all duration-200 text-[#3E3E3E] font-bold text-lg">PEDIR COTIZACIÓN</div>
+              <div onClick={() => handleClick( name !== "Vehicular" ? `Cotización de ${name}` : "Cotización Vehicular")} className="absolute flex justify-center items-center w-full h-full rounded-lg opacity-0 hover:opacity-100 bg-white/70 backdrop-blur-sm transition-all duration-200 text-[#3E3E3E] font-bold text-lg">{
+                name === "Denuncia Siniestros" ? "DENUNCIAR" : "PEDIR COTIZACIÓN"
+                }</div>
               <img
                 src={image}
                 alt={name}
-                className="w-full h-full rounded-lg"
+                className="w-full h-[180px] rounded-lg"
               />
               </ScrollLink>
             </div>

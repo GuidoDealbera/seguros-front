@@ -161,6 +161,14 @@ const Contact = ({ subject, setSubject }) => {
               Asunto
             </option>
             {SERVICES_OPTIONS.map((service, i) => (
+              service === "Seguros" ? 
+              <option value="Denuncia de siniestro" key={i}>
+                Denuncia de siniestro
+              </option>
+              :
+              service === 'Vehicular' ?
+              <option value="Cotización Vehicular" key={i}>Cotización Vehicular</option>
+              :
               <option
                 key={i}
                 value={`Cotización de ${service}`}
