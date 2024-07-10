@@ -1,15 +1,29 @@
+import UAParser from 'ua-parser-js';
+
 export const validate = (inputs) => {
     const errors = {};
     const nameRegexp = /^[a-zA-Z\s]+$/;
     const emailRegexp = /^[a-zA-Z\s]+$/;
     const subjectRegexp = /^[a-zA-Z0-9\s.,!?'-]$/
-    if(!nameRegexp.test(inputs.name.trim())){
+    if (!nameRegexp.test(inputs.name.trim())) {
         errors.name = 'El nombre no puede contener números ni símbolos';
     }
-    if(!emailRegexp.test(inputs.email.trim())){
+    if (!emailRegexp.test(inputs.email.trim())) {
         errors.email = 'Ingrese un email válido';
     }
-    if(!subjectRegexp.text(inputs.subject)){
+    if (!subjectRegexp.text(inputs.subject)) {
         errors.subject = 'Error en el asunto';
     }
+}
+
+export const isMobileDevice = () => {
+    const parser = new UAParser();
+    const result = parser.getResult();
+    const device = result.device;
+
+    if(device.type === "mobile"){
+        return `Enviado desde mi ${device.vendor} ${device.model}`
+    }
+
+    return "Enviado desde mi ordenador"
 }
